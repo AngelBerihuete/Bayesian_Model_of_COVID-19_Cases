@@ -2,7 +2,8 @@
 
 From the paper "A Bayesian Model of COVID-19 Cases Based on the Gompertz Curve"
 
-doi.org/10.3390/math9030228
+[https://doi.org/10.3390/math9030228](https://doi.org/10.3390/math9030228
+)
 
 We perform Bayesian inference for a non-homogeneous Poisson process with an
 intensity function based on the Gompertz curve.
