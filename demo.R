@@ -10,7 +10,6 @@ rstan_options(auto_write = TRUE)
 # Reading the data from 
 # https://cnecovid.isciii.es/covid19/#documentaci%C3%B3n-y-datos
 # --------------------------------------------------------------
-#
 
 data <- read_csv("casos_diagnostico_provincia.csv")
 
@@ -81,7 +80,7 @@ initf <- function(chain_id = 1) {
   )
 }
 
-n_chains <- 4
+n_chains <- 2
 init_ll <- lapply(1:n_chains, function(id) initf(chain_id = id))
 
 # 6. Fitting the model
@@ -147,4 +146,19 @@ parameters %>% rowwise() %>%
   gather(key = "curve", value = "value", -time) -> df
 
 
-ggplot(data = df, aes(time, value)) + geom_line(aes(group=curve), color="grey")
+ggplot(data = df, aes(time, value)) + 
+  geom_line(aes(group=curve), color="grey") +
+  scale_y_continuous("Daily cumulative cases",
+                     labels=function(x) format(x, big.mark = ",",
+                                               scientific = FALSE)) +
+  scale_x_date("") +
+  theme_bw() +
+  theme(
+    text = element_text(size=20), 
+    plot.title = element_text(face = "bold", size = 12),
+    legend.background = element_rect(fill = "white", size = 4, colour = "white"),
+    legend.title = element_blank(),
+    legend.justification=c(0.025,.975), legend.position=c(0.025,.975),
+    axis.ticks = element_line(colour = "grey70", size = 0.2),
+    panel.grid.major = element_line(colour = "grey70", size = 0.2),
+    panel.grid.minor = element_blank())
